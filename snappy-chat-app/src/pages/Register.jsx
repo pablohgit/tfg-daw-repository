@@ -1,12 +1,16 @@
 import axios from "axios";
 import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Logo from "../assets/logo.svg";
 import { registerRoute } from "../utils/APIRoutes";
 import "./styles/styles.scss";
 
+/**
+ * Constantes que establecen los valores por defecto de los campos
+ * del formulario
+ */
 const STARTED_VALUES = {
   username: "",
   email: "",
@@ -14,6 +18,9 @@ const STARTED_VALUES = {
   confirmPassword: ""
 };
 
+/**
+ * Opciones de la libreria de banners de React --> ReactToatify
+ */
 const TOAST_OPTIONS = {
   position: "bottom-right",
   autoClose: 8000,
@@ -22,10 +29,19 @@ const TOAST_OPTIONS = {
   theme: "dark"
 };
 
-function Register() {
+/**
+ * Este es el principio del formulario de registro
+ * @returns una sintaxis en HTML que es la que se muestra en pantalla con toda la funcionalidad
+ */
+export default function Register() {
   const navigate = useNavigate();
   const [values, setValues] = useState(STARTED_VALUES);
 
+  /**
+   * Evento que se ejecuta cuando el usuario pulsa el boton de registrar
+   * es el metodo que se encarga de hacer las validaciones y de enviar los datos por medio del APIRoutes
+   * @param {*} event
+   */
   const handlerSubmit = async (event) => {
     event.preventDefault();
     if (handlerValidation()) {
@@ -37,21 +53,34 @@ function Register() {
       });
       if (data.status === true) {
         localStorage.setItem("snappy-chat-app user", JSON.stringify(data.user));
+        navigate("/");
       } else {
         toast.error(data.msg, TOAST_OPTIONS);
       }
-      navigate("/");
     }
   };
 
+  /**
+   * Metodo que restablece los valores del formulario con los nuevos
+   * valores que el usuario inserta
+   * @param {*} event
+   */
   const handlerChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
+  /**
+   * Metodo que hace las validaciones de todos los campos y retorna
+   * un boolean al @method handlerSubmit
+   * @returns un true o false dependiende de si los campos del
+   * formulario cumplen los requisitos que estan impuestos por la
+   * aplicaciones
+   */
   const handlerValidation = () => {
     const { username, email, password, confirmPassword } = values;
     if ((username, email, password, confirmPassword === "")) {
       toast.error("Some fields are empty, you need fill to continue the register.", TOAST_OPTIONS);
+      return false;
     } else if (username.length < 3) {
       toast.error("Username should be greater that 3 characters.", TOAST_OPTIONS);
       return false;
@@ -65,6 +94,9 @@ function Register() {
     return true;
   };
 
+  /**
+   * return del arhivo html con funcionalidad js
+   */
   return (
     <>
       <div className="FormRegister">
@@ -73,13 +105,13 @@ function Register() {
             <img src={Logo} alt="Logo" />
             <h1>Snappy Chat</h1>
           </div>
-          <input type="text" placeholder="Username" name="username" onChange={(event) => handlerChange(event)} />
+          <input type="text" placeholder="Usuario" name="username" onChange={(event) => handlerChange(event)} min="3" />
           <input type="email" placeholder="Email" name="email" onChange={(event) => handlerChange(event)} />
           <input type="password" placeholder="Password" name="password" onChange={(event) => handlerChange(event)} />
-          <input type="password" placeholder="Confirm password" name="confirmPassword" onChange={(event) => handlerChange(event)} />
-          <button type="submit">Create User</button>
+          <input type="password" placeholder="Confirmar password" name="confirmPassword" onChange={(event) => handlerChange(event)} />
+          <button type="submit">Crear usuario</button>
           <span>
-            Already have an account? <Link to="/login">Login</Link>
+            ¿Ya tienes una cuenta? <Link to="/login">Login</Link>
           </span>
         </form>
       </div>
@@ -87,74 +119,3 @@ function Register() {
     </>
   );
 }
-
-// const FormContainer = styled.div``;
-//   // height: 100vh;
-//   // width: 100vw;
-//   // display: flex;
-//   // flex-direction: column;
-//   // justify-content: center;
-//   // gap: 1rem;
-//   // align-items: center;
-//   // background-color: #131324;
-//   // .brand {
-//   //   display: flex;
-//   //   align-items: center;
-//   //   gap: 1rem;
-//   //   justify-content: center;
-//   //   img {
-//   //     height: 5rem;
-//   //   }
-//   //   h1 {
-//   //     color: white;
-//   //     text-transform: uppercase;
-//   //   }
-//   // }
-//   // form {
-//   //   display: flex;
-//   //   flex-direction: column;
-//   //   gap: 2rem;
-//   //   background-color: #00000076;
-//   //   border-radius: 2rem;
-//   //   padding: 3rem 5rem;
-//   //   input {
-//   //     background-color: transparent;
-//   //     padding: 1rem;
-//   //     border: 0.1rem solid #4e0eff;
-//   //     border-radius: 0.4rem;
-//   //     color: white;
-//   //     width: 100%;
-//   //     font-size: 1rem;
-//   //     &:focus {
-//   //       border: 0.1rem solid #997af0;
-//   //       outline: none;
-//   //     }
-//   //   }
-//   //   button {
-//   //     background-color: #4e0eff;
-//   //     color: white;
-//   //     padding: 1rem 2rem;
-//   //     border: none;
-//   //     font-weight: bold;
-//   //     cursor: pointer;
-//   //     border-radius: 0.4rem;
-//   //     font-size: 1rem;
-//   //     text-transform: uppercase;
-//   //     transition: 0.5s ease-in-out;
-//   //     &:hover {
-//   //       background-color: #997af0;
-//   //     }
-//   //   }
-//   //   span {
-//   //     color: white;
-//   //     text-transform: uppercase;
-//   //     a {
-//   //       color: #997af0;
-//   //       text-decoration: none;
-//   //       font-weight: bold;
-//   //     }
-//   //   }
-//   // }
-// `;
-
-export default Register;
