@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Logo from "../assets/logo.svg";
 import { registerRoute } from "../utils/APIRoutes";
-import "./styles/styles.scss";
+import "./styles/RegisterStyles.scss";
 
 /**
  * Constantes que establecen los valores por defecto de los campos
@@ -52,7 +52,7 @@ export default function Register() {
         password
       });
       if (data.status === true) {
-        localStorage.setItem("snappy-chat-app user", JSON.stringify(data.user));
+        localStorage.setItem("snappy-chat-app-user", JSON.stringify(data.user));
         navigate("/");
       } else {
         toast.error(data.msg, TOAST_OPTIONS);
@@ -99,7 +99,7 @@ export default function Register() {
    */
   return (
     <>
-      <div className="FormRegister">
+      <div className="form-register">
         <form onSubmit={(event) => handlerSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="Logo" />

@@ -1,17 +1,24 @@
 import axios from "axios";
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Logo from "../assets/logo.svg";
 import { loginRoute } from "../utils/APIRoutes";
-import "./styles/styles.scss";
+import "./styles/LoginStyles.scss";
 
+/**
+ * Constantes que establecen los valores por defecto de los campos
+ * del formulario
+ */
 const STARTED_VALUES = {
   username: "",
   password: ""
 };
 
+/**
+ * Opciones de la libreria de banners de React --> ReactToatify
+ */
 const TOAST_OPTIONS = {
   position: "bottom-right",
   autoClose: 8000,
@@ -20,10 +27,25 @@ const TOAST_OPTIONS = {
   theme: "dark"
 };
 
+/**
+ * Este es el principio del formulario de logeo
+ * @returns una sintaxis en HTML que es la que se muestra en pantalla con toda la funcionalidad
+ */
 export default function Login() {
   const navigate = useNavigate();
   const [values, setValues] = useState(STARTED_VALUES);
 
+  useEffect(() => {
+    if (localStorage.getItem("snappy-chat-app-user")) {
+      navigate("/");
+    }
+  }, []);
+
+  /**
+   * Evento que se ejecuta cuando el usuario pulsa el boton de logear
+   * es el metodo que se encarga de hacer las validaciones y de enviar los datos por medio del APIRoutes
+   * @param {*} event
+   */
   const handlerSubmit = async (event) => {
     event.preventDefault();
     if (handlerValidation()) {
@@ -33,7 +55,7 @@ export default function Login() {
         password
       });
       if (data.status === true) {
-        localStorage.setItem("snappy-chat-app user", JSON.stringify(data.user));
+        localStorage.setItem("snappy-chat-app-user", JSON.stringify(data.user));
         navigate("/");
       } else {
         toast.error(data.msg, TOAST_OPTIONS);
@@ -41,10 +63,22 @@ export default function Login() {
     }
   };
 
+  /**
+   * Metodo que restablece los valores del formulario con los nuevos
+   * valores que el usuario inserta
+   * @param {*} event
+   */
   const handlerChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
+  /**
+   * Metodo que hace las validaciones de todos los campos y retorna
+   * un boolean al @method handlerSubmit
+   * @returns un true o false dependiende de si los campos del
+   * formulario cumplen los requisitos que estan impuestos por la
+   * aplicaciones
+   */
   const handlerValidation = () => {
     const { username, password } = values;
     if (username.length === "") {
@@ -57,9 +91,12 @@ export default function Login() {
     return true;
   };
 
+  /**
+   * return del arhivo html con funcionalidad js
+   */
   return (
     <>
-      <div className="FormRegister">
+      <div className="form-login">
         <form onSubmit={(event) => handlerSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="Logo" />

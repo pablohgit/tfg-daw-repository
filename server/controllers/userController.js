@@ -10,19 +10,17 @@ const bcrypt = require("bcrypt");
  * @param {*} req
  * @param {*} res
  * @param {*} next
- * @returns un response que usa el metodo json para enviar un mensaje de
- * error y status de error (ejemplo: 404 ERROR), o si todo ha funcionado
- * correctamente un status 200: OK
+ * @returns
  */
 module.exports.register = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
 
     const usernameCheck = await User.findOne({ username });
-    if (usernameCheck) return res.json({ msg: "Username already used", status: false });
+    if (usernameCheck) return res.json({ msg: "Usuario ya en uso, prueba otro", status: false });
 
     const emailCheck = await User.findOne({ email });
-    if (emailCheck) return res.json({ msg: "Email already used", status: false });
+    if (emailCheck) return res.json({ msg: "Email ya en uso, prueba otro", status: false });
 
     const hashedPass = await bcrypt.hash(password, 10);
 
@@ -32,7 +30,7 @@ module.exports.register = async (req, res, next) => {
       password: hashedPass
     });
     if (user) {
-      console.log("User create successful!! 👌");
+      console.log("Usuario creado con exito!! 👌");
     }
     delete user.password;
     return res.json({ status: true, user });
@@ -43,13 +41,11 @@ module.exports.register = async (req, res, next) => {
 
 /**
  * Modulo que gestiona los metodos, comprobaciones, ... de la funcion
- * de registrar al usuario
+ * de logear al usuario
  * @param {*} req
  * @param {*} res
  * @param {*} next
- * @returns un response que usa el metodo json para enviar un mensaje de
- * error y status de error (ejemplo: 404 ERROR), o si todo ha funcionado
- * correctamente un status 200: OK
+ * @returns
  */
 module.exports.login = async (req, res, next) => {
   try {
@@ -63,10 +59,35 @@ module.exports.login = async (req, res, next) => {
       return res.json({ msg: "Usuario o password incorrectos", status: false });
     }
     if (user) {
-      console.log("User create successful!! 👌");
+      console.log("Usuario logeado con exito!! 👌");
     }
     delete user.password;
     return res.json({ status: true, user });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * Modulo que gestiona los metodos, comprobaciones, ... de la funcion
+ * de actualizar al usuario con el nuevo avatar seleccionado
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns
+ */
+module.exports.setAvatar = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const avatarImage = req.body.image;
+    const userData = await User.findByIdAndUpdate(userId, {
+      isAvatarImageSet: true,
+      avatarImage
+    });
+    if (userData) {
+      console.log("Usuario actualizado con el nuevo avatar con exito!! 👌");
+    }
+    return res.json({ isSet: userData.isAvatarImageSet, image: userData.avatarImage });
   } catch (err) {
     next(err);
   }
