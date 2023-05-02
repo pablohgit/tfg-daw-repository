@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../assets/loader.gif";
+import "../styles/SetAvatarStyles.scss";
 import { setAvatarRoute } from "../utils/APIRoutes";
-import "./styles/SetAvatarStyles.scss";
 
 /**
  * Opciones de la libreria de banners de React --> ReactToatify
@@ -24,7 +24,7 @@ const TOAST_OPTIONS = {
  * @returns una sintaxis en HTML que es la que se muestra en pantalla con toda la funcionalidad
  */
 export default function SetAvatar() {
-  const api_url = "https://api.dicebear.com/6.x/avataaars/svg?backgroundColor=ffffff&mouth=smile&eyebrows=default&eyes=surprised&radius=50&seed=";
+  const api_url = "https://api.dicebear.com/6.x/avataaars/svg?backgroundColor=997af0&mouth=smile&eyebrows=default&eyes=surprised&radius=50&seed=";
   const navigate = useNavigate();
   const [avatars, setAvatars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,11 +48,11 @@ export default function SetAvatar() {
       toast.error("Por favor, seleccione un avatar", TOAST_OPTIONS);
     } else {
       const user = await JSON.parse(localStorage.getItem("snappy-chat-app-user"));
-      const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
+      const data = await axios.post(`${setAvatarRoute}/${user._id}`, {
         image: avatars[selectedAvatar]
       });
 
-      if (data.isSet) {
+      if (data.status === 200) {
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
         localStorage.setItem("snappy-chat-app-user", JSON.stringify(user));
@@ -64,21 +64,32 @@ export default function SetAvatar() {
   };
 
   /**
-   * Hook que llama a la api con un numero aleatorio y mediante un loop se genera 4 veces
+   * Metodo que llama a fetchApiUrl para refrescar el array de avatares
+   */
+  const refreshAvatars = () => {
+    fetchApiUrl();
+  };
+
+  /**
+   * Metodo que llama a la api con un numero aleatorio y mediante un loop se genera 4 veces
    * se le pasa la respuesta a un buffer, se establece su tipado al buffer y una vez cuando el lopp acaba
    * se setea los avatares con la data y se seta el loader a falso
    */
-  useEffect(() => {
-    async function fetchApiUrl() {
-      const data = [];
-      for (let i = 0; i <= 4; i++) {
-        const image = await axios.get(`${api_url}${Math.round(Math.random() * 1000)}`);
-        const buffer = new Buffer(image.data);
-        data.push(buffer.toString("base64"));
-      }
-      setAvatars(data);
-      setIsLoading(false);
+  async function fetchApiUrl() {
+    const data = [];
+    for (let i = 0; i <= 4; i++) {
+      const image = await axios.get(`${api_url}${Math.round(Math.random() * 1000)}`);
+      const buffer = new Buffer(image.data);
+      data.push(buffer.toString("base64"));
     }
+    setAvatars(data);
+    setIsLoading(false);
+  }
+
+  /**
+   * Hook que llama al metodo fetchApiUrl para generar el los avatares
+   */
+  useEffect(() => {
     fetchApiUrl();
   }, []);
 
@@ -99,15 +110,20 @@ export default function SetAvatar() {
           <div className="avatars">
             {avatars.map((avatar, index) => {
               return (
-                <div key={index} className={`avatar ${selectedAvatar === index ? "selected" : ""}`}>
+                <div key={index + 1} className={`avatar ${selectedAvatar === index ? "selected" : ""}`}>
                   <img src={`data:image/svg+xml;base64,${avatar}`} alt="avatar" onClick={() => setSelectedAvatar(index)} />
                 </div>
               );
             })}
           </div>
-          <button className="submit-btn" onClick={setProfilePicture}>
-            Establecer como foto de perfil
-          </button>
+          <div className="buttons-container">
+            <button className="submit-btn" onClick={async () => await setProfilePicture()}>
+              Establecer como foto de perfil
+            </button>
+            <button className="submit-btn" onClick={refreshAvatars}>
+              Cambiar avatares
+            </button>
+          </div>
         </div>
       )}
       <ToastContainer />

@@ -1,0 +1,126 @@
+// Archivo de estilos de la pantalla de chat
+
+.chat-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  background-color: #131324;
+  .container {
+    height: 85vh;
+    width: 85vw;
+    background-color: #00000076;
+    display: grid;
+    grid-template-columns: 25% 75%;
+
+    .contacts-container {
+      display: grid;
+      grid-template-rows: 10% 75% 15%;
+      overflow: hidden;
+      background-color: #080420;
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        justify-content: center;
+        img {
+          height: 2rem;
+        }
+        h3 {
+          color: white;
+          text-transform: uppercase;
+        }
+      }
+      .contacts {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: auto;
+        gap: 0.8rem;
+        &::-webkit-scrollbar {
+          width: 0.2rem;
+          &-thumb {
+            background-color: #ffffff39;
+            width: 0.1rem;
+            border-radius: 1rem;
+          }
+        }
+        .contact {
+          background-color: #ffffff34;
+          min-height: 5rem;
+          cursor: pointer;
+          width: 90%;
+          border-radius: 0.2rem;
+          padding: 0.4rem;
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+          transition: 0.5s ease-in-out;
+          .avatar {
+            img {
+              height: 3rem;
+            }
+          }
+          .username {
+            h3 {
+              color: white;
+            }
+          }
+        }
+        .selected {
+          background-color: #9a86f3;
+        }
+      }
+      .current-user {
+        background-color: #0d0d30;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        .avatar {
+          img {
+            height: 4rem;
+            max-inline-size: 100%;
+          }
+        }
+        .username {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          h2 {
+            color: #ffffff;
+          }
+        }
+        @media screen and (min-width: 720px) and (max-width: 1080px) {
+          gap: 0.5rem;
+          .username {
+            h2 {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
+
+    .welcome-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #ffffff;
+      img {
+        height: 20rem;
+      }
+      span {
+        color: #997af0;
+      }
+    }
+
+    @media screen and (min-width: 720px) and (max-width: 1080px) {
+      grid-template-columns: 35% 65%;
+    }
+  }
+}

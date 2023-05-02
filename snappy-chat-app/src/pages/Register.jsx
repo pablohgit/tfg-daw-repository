@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Logo from "../assets/logo.svg";
+import "../styles/RegisterStyles.scss";
 import { registerRoute } from "../utils/APIRoutes";
-import "./styles/RegisterStyles.scss";
 
 /**
  * Constantes que establecen los valores por defecto de los campos
@@ -53,7 +53,7 @@ export default function Register() {
       });
       if (data.status === true) {
         localStorage.setItem("snappy-chat-app-user", JSON.stringify(data.user));
-        navigate("/");
+        navigate("/setAvatars");
       } else {
         toast.error(data.msg, TOAST_OPTIONS);
       }

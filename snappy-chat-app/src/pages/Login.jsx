@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Logo from "../assets/logo.svg";
+import "../styles/LoginStyles.scss";
 import { loginRoute } from "../utils/APIRoutes";
-import "./styles/LoginStyles.scss";
 
 /**
  * Constantes que establecen los valores por defecto de los campos

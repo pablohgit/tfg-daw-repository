@@ -30,10 +30,10 @@ module.exports.register = async (req, res, next) => {
       password: hashedPass
     });
     if (user) {
+      delete user.password;
       console.log("Usuario creado con exito!! 👌");
+      return res.json({ status: true, user });
     }
-    delete user.password;
-    return res.json({ status: true, user });
   } catch (err) {
     next(err);
   }
@@ -60,9 +60,9 @@ module.exports.login = async (req, res, next) => {
     }
     if (user) {
       console.log("Usuario logeado con exito!! 👌");
+      delete user.password;
+      return res.json({ status: true, user });
     }
-    delete user.password;
-    return res.json({ status: true, user });
   } catch (err) {
     next(err);
   }
@@ -86,9 +86,30 @@ module.exports.setAvatar = async (req, res, next) => {
     });
     if (userData) {
       console.log("Usuario actualizado con el nuevo avatar con exito!! 👌");
+      return res.json({ isSet: userData.isAvatarImageSet, image: userData.avatarImage });
     }
-    return res.json({ isSet: userData.isAvatarImageSet, image: userData.avatarImage });
   } catch (err) {
     next(err);
+  }
+};
+
+/**
+ * Modulo que llama a la base de datos para recuperar todos los usuarios que no coincidan con el que le pasamos en req.
+ * Recuperamos el email, el username, el avatar y el identificador
+ * ? Informacion util => $ne permite seleccionar los documentos en los que el valor del campo no es igual al valor especificado
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns
+ */
+module.exports.allUsers = async (req, res, next) => {
+  try {
+    const users = await User.find({ _id: { $ne: req.params.id } }).select(["email", "username", "avatarImage", "_id"]);
+    if (users) {
+      console.log("Usuarios encontrados con exito!! 👌");
+      return res.json(users);
+    }
+  } catch (err) {
+    next(next);
   }
 };
