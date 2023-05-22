@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import "../styles/ChatStyles.scss";
@@ -15,6 +16,7 @@ export default function Chat() {
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
   const [currentChat, setCurrentChat] = useState(undefined);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   /**
    * Hook que checkea si existe un usuario existente en el localStorage y
@@ -26,10 +28,11 @@ export default function Chat() {
         navigate("/login");
       } else {
         setCurrentUser(JSON.parse(localStorage.getItem("snappy-chat-app-user")));
+        setIsLoaded(true);
       }
     }
     getUserFromLocalStorage();
-  }, [navigate]);
+  }, []);
 
   /**
    * Hook que checkea si hay seteado un usuario actual y si no tiene avatar
@@ -69,7 +72,7 @@ export default function Chat() {
       <div className="chat-container">
         <div className="container">
           <Contacts contacts={contacts} currentUser={currentUser} changeChat={handlerChatChange}></Contacts>
-          <Welcome currentUser={currentUser} />
+          {isLoaded && currentChat === undefined ? <Welcome currentUser={currentUser} /> : <ChatContainer currentChat={currentChat} />}
         </div>
       </div>
     </>

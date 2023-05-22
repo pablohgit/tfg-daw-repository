@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../assets/logo.svg";
+import Logout from "./Logout";
 
 /**
  * Este es el principio del contenedor de contactos
@@ -66,6 +67,7 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
             <div className="username">
               <h2>{currentUser.username}</h2>
             </div>
+            <Logout />
           </div>
         </div>
       )}

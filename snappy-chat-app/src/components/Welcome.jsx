@@ -11,7 +11,6 @@ export default function Welcome({ currentUser }) {
         <img src={WelcomeRobot} alt="Robot" />
         <h1>
           Bienvenido, <span>{currentUser.username}</span>
-          {/* Bienvenido, <span>Usuario</span> */}
         </h1>
         <h3>Seleccione alguien con quien hablar y comienza hacer amistades</h3>
       </div>
