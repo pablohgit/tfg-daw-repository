@@ -27,7 +27,6 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
    * @param {*} index
    */
   const changeCurrentChat = async (contact, index) => {
-    console.log(contact, index);
     setCurrentSelected(index);
     changeChat(contact);
   };

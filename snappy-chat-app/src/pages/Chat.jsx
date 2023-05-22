@@ -42,7 +42,6 @@ export default function Chat() {
   useEffect(() => {
     async function fetchUsers() {
       if (currentUser) {
-        console.log(currentUser);
         if (currentUser.isAvatarImageSet) {
           const res = await axios.get(`${allUsersRoute}/${currentUser._id}`);
           if (res.status === 200) {
@@ -72,7 +71,11 @@ export default function Chat() {
       <div className="chat-container">
         <div className="container">
           <Contacts contacts={contacts} currentUser={currentUser} changeChat={handlerChatChange}></Contacts>
-          {isLoaded && currentChat === undefined ? <Welcome currentUser={currentUser} /> : <ChatContainer currentChat={currentChat} />}
+          {isLoaded && currentChat === undefined ? (
+            <Welcome currentUser={currentUser} />
+          ) : (
+            <ChatContainer currentChat={currentChat} currentUser={currentUser} />
+          )}
         </div>
       </div>
     </>

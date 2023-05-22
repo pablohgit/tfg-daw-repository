@@ -1,5 +1,5 @@
 // Archivo donde se gestionan los datos y donde se ejecutan
-// los metodos referentes a la uso de los datos: creacion,
+// los metodos referentes al uso de los datos de usuario/s: creacion,
 // actualizacion, eliminacion, etc.
 const User = require("../model/userModel");
 const bcrypt = require("bcrypt");
