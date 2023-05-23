@@ -1,4 +1,4 @@
-const host = "http://localhost:5000";
+export const host = "http://localhost:5000";
 
 /** constantes que llama a la api que se genera en el servidor,
  * arriba se crea la constante que hace referencia al mismo

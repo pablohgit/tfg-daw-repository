@@ -1,17 +1,19 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import "../styles/ChatStyles.scss";
-import { allUsersRoute } from "../utils/APIRoutes";
+import { allUsersRoute, host } from "../utils/APIRoutes";
 
 /**
  * Este es el principio del contenedor de chat
  * @returns una sintaxis en HTML que es la que se muestra en pantalla con toda la funcionalidad
  */
 export default function Chat() {
+  const socket = useRef();
   const navigate = useNavigate();
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -33,6 +35,13 @@ export default function Chat() {
     }
     getUserFromLocalStorage();
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host);
+      socket.current.emit("add-user", currentUser._id);
+    }
+  }, [currentUser]);
 
   /**
    * Hook que checkea si hay seteado un usuario actual y si no tiene avatar
@@ -74,7 +83,7 @@ export default function Chat() {
           {isLoaded && currentChat === undefined ? (
             <Welcome currentUser={currentUser} />
           ) : (
-            <ChatContainer currentChat={currentChat} currentUser={currentUser} />
+            <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} />
           )}
         </div>
       </div>
