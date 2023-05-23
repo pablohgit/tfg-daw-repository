@@ -43,21 +43,25 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
             <h3>Snappy Chat</h3>
           </div>
           <div className="contacts">
-            {contacts.map((contact, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`contact ${index === currentSelected ? "selected" : ""}`}
-                  onClick={() => changeCurrentChat(contact, index)}>
-                  <div className="avatar">
-                    <img src={`data:image/svg+xml;base64,${contact.avatarImage}`} alt="avatar" />
+            {contacts.length === 0 ? (
+              <div className="null-contacts">No existen otros usuarios registrados</div>
+            ) : (
+              contacts.map((contact, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={`contact ${index === currentSelected ? "selected" : ""}`}
+                    onClick={() => changeCurrentChat(contact, index)}>
+                    <div className="avatar">
+                      <img src={`data:image/svg+xml;base64,${contact.avatarImage}`} alt="avatar" />
+                    </div>
+                    <div className="username">
+                      <h3>{contact.username}</h3>
+                    </div>
                   </div>
-                  <div className="username">
-                    <h3>{contact.username}</h3>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
           <div className="current-user">
             <div className="avatar">

@@ -37,7 +37,7 @@ export default function SetAvatar() {
     if (!localStorage.getItem("snappy-chat-app-user")) {
       navigate("/login");
     }
-  }, []);
+  });
 
   /**
    * Function que checkea si el usuario ha seleccionado algun avatar, si no aparece un error y si si ha seleccionado un avatar se procede a la llamada post del servidor
@@ -48,11 +48,11 @@ export default function SetAvatar() {
       toast.error("Por favor, seleccione un avatar", TOAST_OPTIONS);
     } else {
       const user = await JSON.parse(localStorage.getItem("snappy-chat-app-user"));
-      const data = await axios.post(`${setAvatarRoute}/${user._id}`, {
+      const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
         image: avatars[selectedAvatar]
       });
 
-      if (data.status === 200) {
+      if (data.isSet) {
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
         localStorage.setItem("snappy-chat-app-user", JSON.stringify(user));

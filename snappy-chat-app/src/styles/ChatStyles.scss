@@ -40,6 +40,13 @@
         align-items: center;
         overflow: auto;
         gap: 0.8rem;
+        .null-contacts {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #ffffff;
+        }
         &::-webkit-scrollbar {
           width: 0.2rem;
           &-thumb {
