@@ -2,10 +2,6 @@ import React, { useEffect, useState } from "react";
 import Logo from "../assets/logo.svg";
 import Logout from "./Logout";
 
-/**
- * Este es el principio del contenedor de contactos
- * @returns una sintaxis en HTML que es la que se muestra en pantalla con toda la funcionalidad
- */
 export default function Contacts({ contacts, currentUser, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);

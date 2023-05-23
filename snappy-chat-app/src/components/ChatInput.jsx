@@ -7,16 +7,28 @@ export default function ChatInput({ handleSendMsg }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [msg, setMsg] = useState("");
 
+  /**
+   * Metodo que setea a true o false la variable showEmojiPicker
+   */
   const handleEmojiPickerHideShow = () => {
     setShowEmojiPicker(!showEmojiPicker);
   };
 
+  /**
+   * Metodo que mezcla los mensajes con los emojis seleccionados
+   * @param {*} event
+   * @param {*} emojiObject
+   */
   const handleEmojiClick = (event, emojiObject) => {
     let message = msg;
     message += emojiObject.emoji;
     setMsg(message);
   };
 
+  /**
+   * Metodo que envia los datos del msg al padre y setea los mensajes a vacios
+   * @param {*} event
+   */
   const sendChat = (event) => {
     event.preventDefault();
     if (msg.length > 0) {
@@ -25,6 +37,9 @@ export default function ChatInput({ handleSendMsg }) {
     }
   };
 
+  /**
+   * return del arhivo html con funcionalidad js
+   */
   return (
     <>
       <div className="chatInput-container">

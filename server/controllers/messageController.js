@@ -5,6 +5,13 @@ const { json } = require("express");
 const MessageModel = require("../model/messageModel");
 const bcrypt = require("bcrypt");
 
+/**
+ * Modulo que gestiona el mensajes y quien lo manda y quien lo recibe y crea el registro en la base de datos
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns
+ */
 module.exports.addMessage = async (req, res, next) => {
   try {
     const { from, to, message } = req.body;
@@ -21,6 +28,14 @@ module.exports.addMessage = async (req, res, next) => {
   }
 };
 
+/**
+ * Modulo que llama a la base de datos para retornar todos los mensajes correspondientes filtrando por quien lo recibe y quien lo manda
+ * ? Informacion util => $all selecciona los documentos en los que el valor de un campo es una matriz que contiene todos los elementos especificados.
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns
+ */
 module.exports.getMessages = async (req, res, next) => {
   try {
     const { from, to } = req.body;

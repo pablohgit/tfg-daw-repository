@@ -2,16 +2,12 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
-import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
+import ChatContainer from "../components/chatContainer";
 import "../styles/ChatStyles.scss";
 import { allUsersRoute, host } from "../utils/APIRoutes";
 
-/**
- * Este es el principio del contenedor de chat
- * @returns una sintaxis en HTML que es la que se muestra en pantalla con toda la funcionalidad
- */
 export default function Chat() {
   const socket = useRef();
   const navigate = useNavigate();

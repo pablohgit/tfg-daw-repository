@@ -8,9 +8,6 @@ import Loader from "../assets/loader.gif";
 import "../styles/SetAvatarStyles.scss";
 import { setAvatarRoute } from "../utils/APIRoutes";
 
-/**
- * Opciones de la libreria de banners de React --> ReactToatify
- */
 const TOAST_OPTIONS = {
   position: "bottom-right",
   autoClose: 8000,
@@ -19,10 +16,6 @@ const TOAST_OPTIONS = {
   theme: "dark"
 };
 
-/**
- * Este es el principio del seteo de avatar
- * @returns una sintaxis en HTML que es la que se muestra en pantalla con toda la funcionalidad
- */
 export default function SetAvatar() {
   const api_url = "https://api.dicebear.com/6.x/avataaars/svg?backgroundColor=997af0&mouth=smile&eyebrows=default&eyes=surprised&radius=50&seed=";
   const navigate = useNavigate();

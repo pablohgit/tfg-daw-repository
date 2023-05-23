@@ -7,10 +7,6 @@ import Logo from "../assets/logo.svg";
 import "../styles/RegisterStyles.scss";
 import { registerRoute } from "../utils/APIRoutes";
 
-/**
- * Constantes que establecen los valores por defecto de los campos
- * del formulario
- */
 const STARTED_VALUES = {
   username: "",
   email: "",
@@ -18,9 +14,6 @@ const STARTED_VALUES = {
   confirmPassword: ""
 };
 
-/**
- * Opciones de la libreria de banners de React --> ReactToatify
- */
 const TOAST_OPTIONS = {
   position: "bottom-right",
   autoClose: 8000,
@@ -29,10 +22,6 @@ const TOAST_OPTIONS = {
   theme: "dark"
 };
 
-/**
- * Este es el principio del formulario de registro
- * @returns una sintaxis en HTML que es la que se muestra en pantalla con toda la funcionalidad
- */
 export default function Register() {
   const navigate = useNavigate();
   const [values, setValues] = useState(STARTED_VALUES);

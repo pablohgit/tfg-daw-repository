@@ -9,6 +9,9 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
 
+  /**
+   * Hook que obtiene y setea los mensajes mediante una llamada post al servidor con los params de quien lo ha enviado y quien lo va a recibir
+   */
   useEffect(() => {
     async function fetchData() {
       console.log(`chat: ${currentChat._id} - user: ${currentUser._id}`);
@@ -24,6 +27,10 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
     }
   }, [currentChat]);
 
+  /**
+   * Metodo que emite la señal send-msg que escucha el servidor, se ejecuta un post donde se guardan los mensajes en el servidor y se van seteando los mensajes
+   * @param {*} msg
+   */
   const handleSendMsg = async (msg) => {
     socket.current.emit("send-msg", {
       to: currentChat._id,
@@ -41,22 +48,34 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
     setMessages(msgs);
   };
 
+  /**
+   * Hook que modifica el arrivalMessage
+   */
   useEffect(() => {
     if (socket.current) {
-      socket.current.on("msg-recieve", (msg) => {
+      socket.current.on("msg-receive", (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
   }, []);
 
+  /**
+   * Hook que modifica los messages con los previos
+   */
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
 
+  /**
+   * Hook que modifica el scroll mientras cambien los mensajes
+   */
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  /**
+   * return del arhivo html con funcionalidad js
+   */
   return (
     <>
       {currentChat && (

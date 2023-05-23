@@ -17,7 +17,7 @@ app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoutes);
 
 /**
- * conexion con la base de datos utilizando las variables del archivo .env
+ * Conexion con la base de datos utilizando las variables del archivo .env
  */
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -32,14 +32,20 @@ mongoose
   });
 
 /**
- * constante que hace referencia al puerto a usar en el archivo .env o por defecto el 6001
+ * Constante que hace referencia al puerto a usar en el archivo .env o por defecto el 6001
  */
 const PORT = process.env.PORT || 6001;
 
+/**
+ * Creamos una expresion donde hacemos que la app escuche en el puerto por defecto o el que viene en el .env
+ */
 const server = app.listen(PORT, () => {
   console.log(`Server is started in the port: ${process.env.PORT}`);
 });
 
+/**
+ * Asociamos la libreria socket con sus respectivos params, como puede ser el server y el origin que va a observar la aplicacion del cliente
+ */
 const io = socket(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -47,7 +53,11 @@ const io = socket(server, {
   }
 });
 
+/**
+ * Creamos una instancia de Map
+ */
 global.onlineUsers = new Map();
+
 io.on("connection", (socket) => {
   global.chatSocket = socket;
   socket.on("add-user", (userId) => {
@@ -57,7 +67,7 @@ io.on("connection", (socket) => {
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-recieve", data.message);
+      socket.to(sendUserSocket).emit("msg-receive", data.message);
     }
   });
 });
