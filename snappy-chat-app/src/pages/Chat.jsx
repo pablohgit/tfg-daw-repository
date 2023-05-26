@@ -2,9 +2,9 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
+import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
-import ChatContainer from "../components/chatContainer";
 import "../styles/ChatStyles.scss";
 import { allUsersRoute, host } from "../utils/APIRoutes";
 
@@ -68,9 +68,6 @@ export default function Chat() {
     setCurrentChat(chat);
   };
 
-  /**
-   * return del arhivo html con funcionalidad js
-   */
   return (
     <>
       <div className="chat-container">

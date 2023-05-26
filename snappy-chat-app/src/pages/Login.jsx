@@ -22,8 +22,11 @@ const TOAST_OPTIONS = {
 
 export default function Login() {
   const navigate = useNavigate();
-  const [values, setValues] = useState(STARTED_VALUES);
+  const [values, setValues] = useState(process.env.STARTED_VALUES);
 
+  /**
+   * Hool que checkea si existe valor en el localStorage, si existe navega hasta home == chat
+   */
   useEffect(() => {
     if (localStorage.getItem("snappy-chat-app-user")) {
       navigate("/");
@@ -80,9 +83,6 @@ export default function Login() {
     return true;
   };
 
-  /**
-   * return del arhivo html con funcionalidad js
-   */
   return (
     <>
       <div className="form-login">
@@ -92,7 +92,7 @@ export default function Login() {
             <h1>Snappy Chat</h1>
           </div>
           <input type="text" placeholder="Usuario" name="username" onChange={(event) => handlerChange(event)} />
-          <input type="password" placeholder="Password" name="password" onChange={(event) => handlerChange(event)} />
+          <input type="password" placeholder="Contraseña" name="password" onChange={(event) => handlerChange(event)} />
           <button type="submit">Iniciar Sesion</button>
           <span>
             ¿No tienes una cuenta? <Link to="/registro">Registrate</Link>

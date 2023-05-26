@@ -21,8 +21,10 @@ module.exports.addMessage = async (req, res, next) => {
       sender: from
     });
 
-    if (data) return res.json({ msg: "Message added successfully." });
-    else return res.json({ msg: "Failed to add message to the database" });
+    if (data) {
+      console.log("Mensaje añadido con exito!! 👌");
+      return res.json({ msg: "Message added successfully." });
+    } else return res.json({ msg: "Failed to add message to the database" });
   } catch (err) {
     next(err);
   }
@@ -51,7 +53,10 @@ module.exports.getMessages = async (req, res, next) => {
         message: msg.message.text
       };
     });
-    return res.json(projectedMessages);
+    if (projectedMessages) {
+      console.log("Mensajes obtenidos con exito!! 👌");
+      return res.json(projectedMessages);
+    }
   } catch (err) {
     next(err);
   }

@@ -151,12 +151,13 @@
       }
       .chat-header {
         display: flex;
+        height: 60px;
         justify-content: space-between;
         background-color: #ffffff39;
         border-radius: 1.5rem;
         align-items: center;
         padding: 1rem;
-        margin: 5px;
+        margin: 25px;
         .user-details {
           display: flex;
           align-items: center;

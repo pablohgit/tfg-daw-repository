@@ -2,9 +2,6 @@ import React from "react";
 import WelcomeRobot from "../assets/robot.gif";
 
 export default function Welcome({ contacts, currentUser }) {
-  /**
-   * return del arhivo html con funcionalidad js
-   */
   return (
     <>
       <div className="welcome-container">

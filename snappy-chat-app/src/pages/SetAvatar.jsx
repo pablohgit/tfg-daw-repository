@@ -38,7 +38,7 @@ export default function SetAvatar() {
    */
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
-      toast.error("Por favor, seleccione un avatar", TOAST_OPTIONS);
+      toast.error("Por favor, seleccione un avatar para continuar con el registro", TOAST_OPTIONS);
     } else {
       const user = await JSON.parse(localStorage.getItem("snappy-chat-app-user"));
       const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
@@ -86,9 +86,6 @@ export default function SetAvatar() {
     fetchApiUrl();
   }, []);
 
-  /**
-   * return del arhivo html con funcionalidad js
-   */
   return (
     <>
       {isLoading ? (
@@ -111,7 +108,7 @@ export default function SetAvatar() {
           </div>
           <div className="buttons-container">
             <button className="submit-btn" onClick={async () => await setProfilePicture()}>
-              Establecer como foto de perfil
+              Establecer como avatar
             </button>
             <button className="submit-btn" onClick={refreshAvatars}>
               Cambiar avatares

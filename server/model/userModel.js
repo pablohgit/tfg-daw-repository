@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-/** Modelo de los mensajes de usuario, se podria asociar a una interfaz, lo que pasa
+/** Modelo del usuario, se podria asociar a una interfaz, lo que pasa
  * es que en este caso tambien usamos la libreria de mongoose lo que hace
  * que tambien lo genere como modelo de la base de datos
  */

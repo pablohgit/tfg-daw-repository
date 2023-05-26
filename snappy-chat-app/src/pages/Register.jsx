@@ -68,24 +68,21 @@ export default function Register() {
   const handlerValidation = () => {
     const { username, email, password, confirmPassword } = values;
     if ((username, email, password, confirmPassword === "")) {
-      toast.error("Some fields are empty, you need fill to continue the register.", TOAST_OPTIONS);
+      toast.error("Algunos campos estan vacios, necesita rellenarlos para completar el registro.", TOAST_OPTIONS);
       return false;
     } else if (username.length < 3) {
-      toast.error("Username should be greater that 3 characters.", TOAST_OPTIONS);
+      toast.error("El usuario tiene que contener mas de 3 caracteres.", TOAST_OPTIONS);
       return false;
     } else if (password.length + 1 <= 8) {
-      toast.error("Password should be greater or equal that 8 characters.", TOAST_OPTIONS);
+      toast.error("La contraseña tiene que ser mas grande o igual a 8 caracteres.", TOAST_OPTIONS);
       return false;
     } else if (password !== confirmPassword) {
-      toast.error("Password and Confirm password should be same.", TOAST_OPTIONS);
+      toast.error("Contraseña y Confirmar contraseña tienen ser la misma.", TOAST_OPTIONS);
       return false;
     }
     return true;
   };
 
-  /**
-   * return del arhivo html con funcionalidad js
-   */
   return (
     <>
       <div className="form-register">
@@ -96,8 +93,8 @@ export default function Register() {
           </div>
           <input type="text" placeholder="Usuario" name="username" onChange={(event) => handlerChange(event)} min="3" />
           <input type="email" placeholder="Email" name="email" onChange={(event) => handlerChange(event)} />
-          <input type="password" placeholder="Password" name="password" onChange={(event) => handlerChange(event)} />
-          <input type="password" placeholder="Confirmar password" name="confirmPassword" onChange={(event) => handlerChange(event)} />
+          <input type="password" placeholder="Contraseña" name="password" onChange={(event) => handlerChange(event)} />
+          <input type="password" placeholder="Confirmar contraseña" name="confirmPassword" onChange={(event) => handlerChange(event)} />
           <button type="submit">Crear usuario</button>
           <span>
             ¿Ya tienes una cuenta? <Link to="/login">Login</Link>

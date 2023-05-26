@@ -27,9 +27,6 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
     changeChat(contact);
   };
 
-  /**
-   * return del arhivo html con funcionalidad js
-   */
   return (
     <>
       {currentUserName && currentUserImage && (

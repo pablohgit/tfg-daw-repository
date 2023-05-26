@@ -37,9 +37,6 @@ export default function ChatInput({ handleSendMsg }) {
     }
   };
 
-  /**
-   * return del arhivo html con funcionalidad js
-   */
   return (
     <>
       <div className="chatInput-container">

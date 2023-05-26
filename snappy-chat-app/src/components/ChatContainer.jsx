@@ -73,9 +73,6 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  /**
-   * return del arhivo html con funcionalidad js
-   */
   return (
     <>
       {currentChat && (

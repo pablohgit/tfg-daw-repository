@@ -31,9 +31,6 @@ mongoose
     console.log(err.message);
   });
 
-/**
- * Constante que hace referencia al puerto a usar en el archivo .env o por defecto el 6001
- */
 const PORT = process.env.PORT || 6001;
 
 /**

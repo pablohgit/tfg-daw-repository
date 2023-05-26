@@ -13,9 +13,6 @@ export default function Logout() {
     navigate("/login");
   };
 
-  /**
-   * return del arhivo html con funcionalidad js
-   */
   return (
     <>
       <div className="logout-container" onClick={handlerClick}>
